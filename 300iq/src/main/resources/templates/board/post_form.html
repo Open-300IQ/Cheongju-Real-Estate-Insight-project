@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:replace="~{fragments/header :: headerFragment}"></div>
+
+<body class="standalone-form-page">
+
+    <div class="form-container">
+        <h1>새 글 작성</h1>
+        
+        <form th:action="@{/board/post}" method="post">
+            <div>
+                <label for="author">작성자:</label>
+                <input type="text" id="author" name="author" placeholder="닉네임 입력">
+            </div>
+            <div>
+                <label for="title">제목:</label>
+                <input type="text" id="title" name="title" placeholder="제목 입력">
+            </div>
+            <div>
+                <label for="content">내용:</label>
+                <textarea id="content" name="content" placeholder="내용을 입력하세요..."></textarea>
+            </div>
+            <button type="submit">저장하기</button>
+        </form>
+        
+        <div class="info-text" style="border-top: none; margin-top: 20px; padding-top: 0;">
+             <a th:href="@{/board/list}" style="color: var(--text-light); text-decoration: none; font-weight: 500;">
+                목록으로 돌아가기
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

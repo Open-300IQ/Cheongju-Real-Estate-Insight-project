@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:replace="~{fragments/header :: headerFragment}"></div>
+
+<body class="standalone-form-page">
+
+    <div class="form-container">
+        <h1>회원가입</h1>
+        
+        <form th:action="@{/user/signup}" method="post" th:object="${userCreateForm}">
+            
+            <div th:if="${#fields.hasGlobalErrors()}" class="form-error" style="text-align: center;">
+                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+            </div>
+
+            <div>
+                <label for="email">이메일(ID):</label>
+                <input type="email" id="email" th:field="*{email}">
+                <div class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+            <div>
+                <label for="nickname">닉네임:</label>
+                <input type="text" id="nickname" th:field="*{nickname}">
+                <div class="form-error" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></div>
+            </div>
+            <div>
+                <label for="password_1">비밀번호:</label>
+                <input type="password" id="password_1" th:field="*{password_1}">
+                <div class="form-error" th:if="${#fields.hasErrors('password_1')}" th:errors="*{password_1}"></div>
+            </div>
+            <div>
+                <label for="password_2">비밀번호 확인:</label>
+                <input type="password" id="password_2" th:field="*{password_2}">
+                <div class="form-error" th:if="${#fields.hasErrors('password_2')}" th:errors="*{password_2}"></div>
+            </div>
+            
+            <button type="submit">가입하기</button>
+        </form>
+    </div>
+
+</body>
+</html>
