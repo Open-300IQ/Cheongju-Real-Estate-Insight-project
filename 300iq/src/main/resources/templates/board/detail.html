@@ -1,22 +1,38 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${post.title}">게시글 상세</title>
+    <title th:text="${board.subject}"></title>
 </head>
+
 <body>
-    <h1 th:text="${post.title}">제목</h1>
-    <p><strong>작성자:</strong> <span th:text="${post.author}">김사장</span></p>
-    <hr>
-    <div>
-        <pre th:text="${post.content}">게시글 내용이 여기에 표시됩니다.</pre>
+<div layout:fragment="content" class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-8">
+            
+            <h2 class="border-bottom py-2" th:text="${board.subject}"></h2>
+            
+            <div class="d-flex justify-content-end my-3">
+                <div class="badge bg-light text-dark p-2">
+                    <span th:if="${board.author != null}" th:text="${board.author.username}"></span>
+                    <span th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+                </div>
+            </div>
+            
+            <div class="card my-3">
+                <div class="card-body">
+                    <div class="card-text" style="min-height: 200px;" 
+                         th:utext="${#strings.replace(board.content, T(System).getProperty('line.separator'), '<br/>')}">
+                    </div>
+                </div>
+            </div>
+            
+            <a th:href="@{/}" class="btn btn-secondary">목록</a>
+            
+            </div>
     </div>
-    <hr>
-    
-    <a th:href="@{/board/list}">목록으로 돌아가기</a>
-    
-    <a th:href="@{/board/edit/{id}(id=${post.id})}">수정하기 (FR-004)</a>
-    <a th:href="@{/board/delete/{id}(id=${post.id})}"
-       onclick="return confirm('정말로 삭제하시겠습니까?');">삭제하기 (FR-005)</a>
-    </body>
+</div>
+</body>
 </html>

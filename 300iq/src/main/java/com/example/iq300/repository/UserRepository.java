@@ -5,10 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-
-    // (추가) UserController와 UserSecurityService가 사용할 메서드
-    Optional<User> findByEmail(String email);
-
-    // (추가) UserService가 닉네임 중복 검사에 사용할 메서드
-    Optional<User> findByNickname(String nickname);
+    
+    // Spring Security가 사용자 이름을 기반으로 유저를 찾을 때 이 메서드를 사용합니다.
+    Optional<User> findByUsername(String username);
 }

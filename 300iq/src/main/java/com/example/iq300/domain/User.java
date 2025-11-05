@@ -5,25 +5,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter; // 👈 (필수)
-import lombok.Setter; // 👈 (필수)
+import lombok.Getter;
+import lombok.Setter;
 
-@Getter // 👈 (필수)
-@Setter // 👈 (필수)
+@Getter
+@Setter
 @Entity
-public class User {
+public class User { // (참고: DB에는 'site_user' 또는 'users' 테이블로 생성될 수 있음)
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String email;
+    @Column(unique = true, nullable = false)
+    private String username;
 
-    @Column(unique = true)
-    private String nickname; // 👈 (추가) 이 필드가 없었습니다.
-
+    @Column(nullable = false)
     private String password;
 
-    private boolean isVerified; // 👈 (추가) 이 필드가 없었습니다.
+    @Column(unique = true, nullable = false)
+    private String email;
+    
+    // ======== [ 이 줄을 추가합니다 (DB 오류 해결) ] ========
+    private boolean isVerified;
+    // ===============================================
 }

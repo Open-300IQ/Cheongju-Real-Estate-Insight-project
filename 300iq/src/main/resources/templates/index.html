@@ -2,58 +2,52 @@
 <html lang="ko" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}"> <head>
-    <title>메인</title> <style>
-        /* index.html 전용 스타일 */
-        .sidebar-right {
-            position: fixed;
-            top: 70px; /* 헤더 높이(약 56px) + 여백 */
-            right: 20px;
-            width: 250px;
-        }
-        .gemini-chat {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 250px; /* 사이드바와 동일 너비 */
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .main-content {
-            margin-right: 290px; /* 사이드바 너비(250) + 여백(40) */
-        }
-    </style>
+      layout:decorate="~{layout}">
+<head>
+    <title>게시판</title>
 </head>
 
 <body>
+<div layout:fragment="content" class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10"> <div class="board-container">
+                
+                <div class="board-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3 class="mb-0">300IQ</h3>
+                        <nav class="nav nav-pills mt-2">
+                            <a class="nav-link active" th:href="@{/}">게시판</a>
+                            <a class="nav-link" th:href="@{/analysis}">자료 분석하기</a>
+                            <a class="nav-link" th:href="@{/ai}">AI에게 상담하기</a>
+                        </nav>
+                    </div>
+                    <a th:href="@{/board/create}" class="btn btn-primary">글쓰기</a>
+                </div>
 
-<div layout:fragment="content" class="container-fluid mt-4">
-    <div class="row">
+                <table class="table table-hover mt-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="width: 10%;">번호</th>
+                            <th style="width: 60%;">제목</th>
+                            <th style="width: 15%;">글쓴이</th>
+                            <th style="width: 15%;">작성일시</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="board, loop : ${boardList}">
+                            <td th:text="${boardList.size - loop.index}"></td>
+                            <td>
+                                <a th:href="@{|/board/detail/${board.id}|}" 
+                                   th:text="${board.subject}"></a>
+                            </td>
+                            <td th:text="${board.author != null ? board.author.username : '익명'}"></td>
+                            <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd')}"></td>
+                        </tr>
+                    </tbody>
+                </table>
 
-        <div class="col-md-9 main-content">
-            <h1>청주시 부동산 데이터 대시보드</h1>
-            <p>이곳에 차트나 주요 데이터를 표시합니다.</p>
-            <canvas id="mainChart" style="width:100%; height:400px;"></canvas>
-        </div>
-
-        <div class="col-md-3 sidebar-right"> <h5>지역별 데이터 선택</h5>
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action" data-region="상당구">상당구</a>
-                <a href="#" class="list-group-item list-group-item-action" data-region="서원구">서원구</a>
-                <a href="#" class="list-group-item list-group-item-action" data-region="흥덕구">흥덕구</a>
-                <a href="#" class="list-group-item list-group-item-action" data-region="청원구">청원구</a>
-            </div>
-
-            <hr class="my-3">
-
-            <div class="gemini-chat"> (추후 Gemini API 영역)
-            </div>
-        </div>
-        
+            </div> </div>
     </div>
 </div>
-
 </body>
 </html>
