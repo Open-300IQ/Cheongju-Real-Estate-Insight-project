@@ -17,22 +17,25 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableMethodSecurity(prePostEnabled = true) // (추가) @PreAuthorize 애너테이션을 사용하기 위해 필요
 public class SecurityConfig {
 
-    @Bean
+	@Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // (수정) 2단계의 임시 permitAll() 대신 최종 보안 규칙 적용
-        .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                 .requestMatchers(
-                        new AntPathRequestMatcher("/"),          // 메인
-                        new AntPathRequestMatcher("/user/login"),    // 로그인
-                        new AntPathRequestMatcher("/user/signup"),   // 회원가입
-                        new AntPathRequestMatcher("/board/detail/**"), // 게시글 보기
-                        new AntPathRequestMatcher("/analysis"),  // (추가) 자료 분석
-                        new AntPathRequestMatcher("/ai")         // (추가) AI 상담
+                        new AntPathRequestMatcher("/"),
+                        new AntPathRequestMatcher("/user/login"),
+                        new AntPathRequestMatcher("/user/signup"),
+                        new AntPathRequestMatcher("/board/detail/**"),
+                        new AntPathRequestMatcher("/analysis"),
+                        new AntPathRequestMatcher("/ai"),
+                        
+                        // ======== [ 이 2줄을 추가합니다 ] ========
+                        new AntPathRequestMatcher("/question/list"),
+                        new AntPathRequestMatcher("/question/detail/**")
+                        
                 ).permitAll()
                 .anyRequest().authenticated()
             )
-            
             .csrf((csrf) -> csrf
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/**")))
                 
