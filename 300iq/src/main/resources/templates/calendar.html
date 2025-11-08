@@ -4,255 +4,136 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>청약 캘린더 (2025년)</title>
-</head><body>
+    <title>청약 캘린더</title>
+</head>
+<body>
 
-<div layout:fragment="content"> 
-
-    <div th:replace="~{fragments/sidebar :: sidebar(activeMenu='calendar')}"></div>
-
-    <div class="right-content">
-        
-        <div class="calendar-header-wrap">
-            <h2 class="mb-4">청약 캘린더 <span class="text-body-secondary">(2025년)</span></h2>
-            
-            <div class="calendar-controls mb-4">
-                <button class="btn btn-primary today-btn">오늘</button>
-                <div class="year-selector">
-                    <button class="arrow-btn" disabled><i class="fa-solid fa-chevron-left"></i></button>
-                    <span class="current-year-month">2025년</span> 
-                    <button class="arrow-btn" disabled><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
+    <div layout:fragment="content"> 
+        <div th:replace="~{fragments/sidebar :: sidebar(activeMenu='calendar')}"></div>
+        <div class="right-content">
+            <h2 class="border-bottom py-2">📅 청약 캘린더</h2>
+            <div class="filter-buttons my-3">
+                <button id="filter-all" class="btn btn-primary">전체</button>
+                <button id="filter-rank-special" class="btn btn-warning">특별공급</button>
+                <button id="filter-rank-1" class="btn btn-info">1순위</button>
+                <button id="filter-rank-2" class="btn btn-success">2순위</button>
+                <button id="filter-rank-unranked" class="btn btn-secondary">무순위</button>
             </div>
-            
-            <div class="calendar-filters mb-4">
-                <label class="form-label">공급유형</label>
-                <div class="filter-buttons-container">
-                    <button class="btn btn-filter type-special checked">특별공급</button>
-                    <button class="btn btn-filter type-rank1 checked">1순위</button>
-                    <button class="btn btn-filter type-rank2 checked">2순위</button>
-                    <button class="btn btn-filter type-unranked checked">무순위</button>
-                    <button class="btn btn-filter type-private-pre checked">민간사전청약 APT</button>
-                    <button class="btn btn-filter type-office checked">오피스텔/생활숙박시설</button>
-                    <button class="btn btn-filter type-public-rental checked">공공지원민간임대</button>
+            <div id='calendar-container'>
+                <div id='calendar'></div>
+            </div>
+        </div> 
+
+        <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl"> <div class="modal-content" style="height: 90vh;"> <div class="modal-header">
+                        <h5 class="modal-title" id="pdfModalLabel">PDF 미리보기</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <iframe id="pdf-iframe" src="about:blank" width="100%" height="100%" frameborder="0"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="calendar-table-wrap">
+        </div>
+
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            /* <![CDATA[ */
             
-            <ul class="nav nav-tabs month-tabs mb-3" id="monthTab" role="tablist">
-                <li class="nav-item" role="presentation" th:each="m : ${#numbers.sequence(1, 12)}">
-                    <button class="nav-link" th:id="|month-${m}-tab|" data-bs-toggle="tab" th:data-bs-target="|#month-${m}|" 
-                            th:classappend="${m == 11 ? 'active' : ''}" type="button" role="tab" th:text="|${m}월|"></button>
-                </li>
-            </ul>
-
-            <div class="tab-content" id="monthTabContent">
-
-                <div class="tab-pane fade" th:classappend="${1 == 11 ? 'show active' : ''}" id="month-1" role="tabpanel">
-                    <table class="table calendar-table">
-                        <thead><tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell">1</td>
-                                <td class="date-cell">2
-                                    <a th:href="@{/pdf/1_2.pdf}" target="_blank" class="schedule-item type-rank1">청주테크노폴리스 하트리움(S4) 1순위</a>
-                                </td>
-                                <td class="date-cell">3
-                                    <a th:href="@{/pdf/1_3.pdf}" target="_blank" class="schedule-item type-rank2">청주테크노폴리스 하트리움(S4) 2순위</a>
-                                </td>
-                                <td class="date-cell saturday">4</td>
-                            </tr>
-                            </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" th:classappend="${2 == 11 ? 'show active' : ''}" id="month-2" role="tabpanel">
-                    <div class="card p-5 text-center"><p class="text-body-secondary">2025년 2월에는 청약 일정이 없습니다.</p></div>
-                </div>
-
-                <div class="tab-pane fade" th:classappend="${3 == 11 ? 'show active' : ''}" id="month-3" role="tabpanel">
-                    <div class="card p-5 text-center"><p class="text-body-secondary">2025년 3월에는 청약 일정이 없습니다.</p></div>
-                </div>
-
-                <div class="tab-pane fade" th:classappend="${4 == 11 ? 'show active' : ''}" id="month-4" role="tabpanel">
-                    <table class="table calendar-table">
-                         <thead><tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
-                        <tbody>
-                            <tr><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell">1</td><td class="date-cell">2</td><td class="date-cell">3</td><td class="date-cell">4</td><td class="date-cell saturday">5</td></tr>
-                            <tr><td class="date-cell sunday">6</td><td class="date-cell">7</td><td class="date-cell">8</td><td class="date-cell">9</td><td class="date-cell">10</td><td class="date-cell">11</td><td class="date-cell saturday">12</td></tr>
-                            <tr>
-                                <td class="date-cell sunday">13</td>
-                                <td class="date-cell">14
-                                    <a th:href="@{/pdf/4_14.pdf}" target="_blank" class="schedule-item type-special">청주테크노폴리스 아테라 2차(A7) 특별공급</a>
-                                </td>
-                                <td class="date-cell">15
-                                    <a th:href="@{/pdf/4_15.pdf}" target="_blank" class="schedule-item type-special">청주테크노폴리스 아테라 2차(A7) 특별공급</a>
-                                </td>
-                                <td class="date-cell">16
-                                    <a th:href="@{/pdf/4_16.pdf}" target="_blank" class="schedule-item type-rank1">청주테크노폴리스 아테라 2차(A7) 1순위</a>
-                                </td>
-                                <td class="date-cell">17
-                                    <a th:href="@{/pdf/4_17.pdf}" target="_blank" class="schedule-item type-rank2">청주테크노폴리스 아테라 2차(A7) 2순위</a>
-                                </td>
-                                <td class="date-cell">18</td>
-                                <td class="date-cell saturday">19</td>
-                            </tr>
-                             </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" th:classappend="${5 == 11 ? 'show active' : ''}" id="month-5" role="tabpanel">
-                    <div class="card p-5 text-center"><p class="text-body-secondary">2025년 5월에는 청약 일정이 없습니다.</p></div>
-                </div>
-
-                <div class="tab-pane fade" th:classappend="${6 == 11 ? 'show active' : ''}" id="month-6" role="tabpanel">
-                    <table class="table calendar-table">
-                         <thead><tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
-                        <tbody>
-                             <tr>
-                                <td class="date-cell sunday">22</td>
-                                <td class="date-cell">23
-                                    <a th:href="@{/pdf/6_23.pdf}" target="_blank" class="schedule-item type-special">동남 하늘채 에디크 특별공급</a>
-                                </td>
-                                <td class="date-cell">24
-                                    <a th:href="@{/pdf/6_24.pdf}" target="_blank" class="schedule-item type-rank1">동남 하늘채 에디크 1순위</a>
-                                </td>
-                                <td class="date-cell">25
-                                    <a th:href="@{/pdf/6_25.pdf}" target="_blank" class="schedule-item type-rank2">동남 하늘채 에디크 2순위</a>
-                                </td>
-                                <td class="date-cell">26</td>
-                                <td class="date-cell">27</td>
-                                <td class="date-cell saturday">28</td>
-                            </tr>
-                            </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" th:classappend="${7 == 11 ? 'show active' : ''}" id="month-7" role="tabpanel">
-                     <table class="table calendar-table">
-                         <thead><tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
-                        <tbody>
-                             <tr>
-                                <td class="date-cell sunday">20</td>
-                                <td class="date-cell">21
-                                    <a th:href="@{/pdf/7_21.pdf}" target="_blank" class="schedule-item type-special">신분평 더웨이시티 제일풍경채 특별공급</a>
-                                </td>
-                                <td class="date-cell">22
-                                    <a th:href="@{/pdf/7_22.pdf}" target="_blank" class="schedule-item type-rank1">신분평 더웨이시티 제일풍경채 1순위</a>
-                                </td>
-                                <td class="date-cell">23
-                                    <a th:href="@{/pdf/7_23.pdf}" target="_blank" class="schedule-item type-rank2">신분평 더웨이시티 제일풍경채 2순위</a>
-                                </td>
-                                <td class="date-cell">24</td>
-                                <td class="date-cell">25</td>
-                                <td class="date-cell saturday">26</td>
-                            </tr>
-                             </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" th:classappend="${8 == 11 ? 'show active' : ''}" id="month-8" role="tabpanel">
-                    <table class="table calendar-table">
-                         <thead><tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
-                        <tbody>
-                            <tr><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell"></td><td class="date-cell">1</td><td class="date-cell saturday">2</td></tr>
-                            <tr>
-                                <td class="date-cell sunday">3</td>
-                                <td class="date-cell">4
-                                    <a th:href="@{/pdf/8_4.pdf}" target="_blank" class="schedule-item type-special">청주 센텀 푸르지오 자이 특별공급</a>
-                                </td>
-                                <td class="date-cell">5
-                                    <a th:href="@{/pdf/8_5.pdf}" target="_blank" class="schedule-item type-rank1">청주 센텀 푸르지오 자이 1순위</a>
-                                </td>
-                                <td class="date-cell">6
-                                    <a th:href="@{/pdf/8_6.pdf}" target="_blank" class="schedule-item type-rank2">청주 센텀 푸르지오 자이 2순위</a>
-                                </td>
-                                <td class="date-cell">7</td><td class="date-cell">8</td><td class="date-cell saturday">9</td>
-                            </tr>
-                            <tr><td class="date-cell sunday">10</td><td class="date-cell">11</td><td class="date-cell">12</td><td class="date-cell">13</td><td class="date-cell">14</td><td class="date-cell">15</td><td class="date-cell saturday">16</td></tr>
-                            <tr>
-                                <td class="date-cell sunday">17</td>
-                                <td class="date-cell">18
-                                    <a th:href="@{/pdf/8_18.pdf}" target="_blank" class="schedule-item type-unranked">동남 하늘채 에디크 무순위</a>
-                                </td>
-                                <td class="date-cell">19</td><td class="date-cell">20</td><td class="date-cell">21</td><td class="date-cell">22</td><td class="date-cell saturday">23</td>
-                            </tr>
-                             <tr>
-                                <td class="date-cell sunday">24</td>
-                                <td class="date-cell">25
-                                    <a th:href="@{/pdf/8_25.pdf}" target="_blank" class="schedule-item type-unranked">신분평 더웨이시티 제일풍경채 무순위</a>
-                                </td>
-                                <td class="date-cell">26</td><td class="date-cell">27</td><td class="date-cell">28</td><td class="date-cell">29</td><td class="date-cell saturday">30</td>
-                            </tr>
-                            <tr><td class="date-cell sunday">31</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" th:classappend="${9 == 11 ? 'show active' : ''}" id="month-9" role="tabpanel">
-                    <table class="table calendar-table">
-                         <thead><tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
-                        <tbody>
-                            <tr><td class="date-cell"></td><td class="date-cell">1...</td></tr>
-                            <tr>
-                                <td class="date-cell sunday">7</td>
-                                <td class="date-cell">8
-                                    <a th:href="@{/pdf/9_8.pdf}" target="_blank" class="schedule-item type-unranked">청주 센텀 푸르지오 자이 무순위</a>
-                                </td>
-                                </tr>
-                            </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" th:classappend="${10 == 11 ? 'show active' : ''}" id="month-10" role="tabpanel">
-                     <table class="table calendar-table">
-                         <thead><tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
-                        <tbody>
-                             <tr>
-                                <td class="date-cell sunday">12</td>
-                                <td class="date-cell">13</td>
-                                <td class="date-cell">14
-                                    <a th:href="@{/pdf/10_14.pdf}" target="_blank" class="schedule-item type-special">청주 롯데캐슬 시그니처 특별공급</a>
-                                </td>
-                                <td class="date-cell">15
-                                    <a th:href="@{/pdf/10_15.pdf}" target="_blank" class="schedule-item type-rank1">청주 롯데캐슬 시그니처 1순위</a>
-                                </td>
-                                <td class="date-cell">16
-                                    <a th:href="@{/pdf/10_16.pdf}" target="_blank" class="schedule-item type-rank2">청주 롯데캐슬 시그니처 2순위</a>
-                                </td>
-                                <td class="date-cell">17</td>
-                                <td class="date-cell saturday">18</td>
-                            </tr>
-                            <tr><td class="date-cell sunday">19</td><td class="date-cell">20</td><td class="date-cell">21</td><td class="date-cell">22</td><td class="date-cell">23</td><td class="date-cell">24</td><td class="date-cell saturday">25</td></tr>
-                            <tr>
-                                <td class="date-cell sunday">26</td>
-                                <td class="date-cell">27
-                                    <a th:href="@{/pdf/10_27.pdf}" target="_blank" class="schedule-item type-special">두산위브더제니스 센트럴파크 특별공급</a>
-                                </td>
-                                <td class="date-cell">28
-                                    <a th:href="@{/pdf/10_28.pdf}" target="_blank" class="schedule-item type-rank1">두산위브더제니스 센트럴파크 1순위</a>
-                                </td>
-                                <td class="date-cell">29
-                                    <a th:href="@{/pdf/10_29.pdf}" target="_blank" class="schedule-item type-rank2">두산위브더제니스 센트럴파크 2순위</a>
-                                </td>
-                                <td class="date-cell">30</td>
-                                <td class="date-cell">31</td>
-                                <td class="date-cell saturday"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade show active" id="month-11" role="tabpanel">
-                    <div class="card p-5 text-center"><p class="text-body-secondary">2025년 11월에는 청약 일정이 없습니다.</p></div>
-                </div>
+            document.addEventListener('DOMContentLoaded', function() {
+            
+                const allEvents = JSON.parse(/*[[${eventsJson}]]*/ '[]');
+                const calendarEl = document.getElementById('calendar');
                 
-                <div class="tab-pane fade" th:classappend="${12 == 11 ? 'show active' : ''}" id="month-12" role="tabpanel">
-                    <div class="card p-5 text-center"><p class="text-body-secondary">2025년 12월에는 청약 일정이 없습니다.</p></div>
-                </div>
+                // ======== [ 2. 모달 객체 미리 준비 ] ========
+                const pdfModalEl = document.getElementById('pdfModal');
+                const pdfModal = new bootstrap.Modal(pdfModalEl);
+                const pdfIframe = document.getElementById('pdf-iframe');
+                const pdfModalLabel = document.getElementById('pdfModalLabel');
+                // ==========================================
 
-            </div> </div> </div> </div>
+                if (calendarEl) {
+                    const calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth', 
+                        locale: 'ko',
+                        headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,dayGridWeek'
+                        },
+                        events: allEvents,
+                        height: '85vh', // 배율 문제 해결 (유지)
+
+                        // ======== [ 3. eventClick 핸들러 수정 ] ========
+                        eventClick: function(info) {
+                            // 1. 기본 동작(새 탭으로 열기)을 막습니다.
+                            info.jsEvent.preventDefault(); 
+                            
+                            // 2. DTO의 url 속성에 PDF 경로가 있는지 확인
+                            if (info.event.url) {
+                                // 3. 모달의 제목과 iframe의 src를 설정
+                                pdfModalLabel.textContent = info.event.title; // 모달 제목 변경
+                                pdfIframe.src = info.event.url; // iframe에 PDF 경로 설정
+                                
+                                // 4. 모달(팝업)을 띄웁니다.
+                                pdfModal.show();
+                            } else {
+                                alert(info.event.title + '\n(연결된 PDF 파일이 없습니다)');
+                            }
+                        }
+                        // 'eventDidMount'는 삭제 (더 이상 필요 없음)
+                        // =============================================
+                    });
+    
+                    calendar.render();
+
+                    // ======== [ 4. 모달이 닫힐 때 PDF 언로드 ] ========
+                    // (메모리 절약을 위해)
+                    pdfModalEl.addEventListener('hidden.bs.modal', function () {
+                        pdfIframe.src = 'about:blank'; // iframe 비우기
+                    });
+                    // ===============================================
+    
+                    // --- 필터링 기능 (유지) ---
+                    document.getElementById('filter-all').addEventListener('click', function() {
+                        calendar.removeAllEvents();
+                        calendar.addEventSource(allEvents);
+                    });
+    
+                    document.getElementById('filter-rank-special').addEventListener('click', function() {
+                        const filteredEvents = allEvents.filter(event => event.className === 'rank-special');
+                        calendar.removeAllEvents();
+                        calendar.addEventSource(filteredEvents);
+                    });
+    
+                    document.getElementById('filter-rank-1').addEventListener('click', function() {
+                        const filteredEvents = allEvents.filter(event => event.className === 'rank-1');
+                        calendar.removeAllEvents();
+                        calendar.addEventSource(filteredEvents);
+                    });
+                    
+                    document.getElementById('filter-rank-2').addEventListener('click', function() {
+                        const filteredEvents = allEvents.filter(event => event.className === 'rank-2');
+                        calendar.removeAllEvents();
+                        calendar.addEventSource(filteredEvents);
+                    });
+    
+                    document.getElementById('filter-rank-unranked').addEventListener('click', function() {
+                        const filteredEvents = allEvents.filter(event => event.className === 'rank-unranked');
+                        calendar.removeAllEvents();
+                        calendar.addEventSource(filteredEvents);
+                    });
+    
+                } else {
+                    console.error("캘린더를 표시할 '#calendar' 요소를 찾을 수 없습니다.");
+                }
+            
+            }); // <-- DOMContentLoaded 닫기
+            
+            /* ]]> */
+        </script>
+    </th:block>
+
 </body>
 </html>

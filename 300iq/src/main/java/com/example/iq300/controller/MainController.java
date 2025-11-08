@@ -58,12 +58,5 @@ public class MainController {
     public String aiPage() {
         return "ai"; // templates/ai.html
     }
-    /**
-     * 청약 캘린더 페이지
-     */
-    @GetMapping("/calendar")
-    public String calendarPage() {
-        // 나중에 DB 연동 시 이곳에서 Model에 데이터를 담아 보냅니다.
-        return "calendar"; // templates/calendar.html
-    } 
+   
 }

@@ -9,7 +9,10 @@
                 <a class="nav-link" th:href="@{/guide}" 
                    th:classappend="${activeMenu == 'guide'} ? 'active'">안전 거래 가이드</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="#">부동산 용어사전</a></li>
+           		<li class="nav-item">
+			                <a class="nav-link" th:href="@{/dictionary/list}"
+			                   th:classappend="${activeMenu == 'dictionary'} ? 'active'">부동산 용어사전</a>
+			            </li>
             <li class="nav-item"><a class="nav-link" href="#">청약 가이드</a></li>
 			<li class="nav-item">
 			                <a class="nav-link" th:href="@{/calendar}"

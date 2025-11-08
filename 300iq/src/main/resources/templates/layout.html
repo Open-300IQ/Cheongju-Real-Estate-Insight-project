@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ko" 
       xmlns:th="http://www.thymeleaf.org" 
@@ -11,20 +12,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/locales/ko.global.min.js"></script>
+	    
     <style>
+		
         body {
             font-family: 'Noto Sans KR', sans-serif !important; 
             background-color: #121212;
-            /* (중요) 헤더(56px) 때문에 상단 패딩 추가 */
             padding-top: 56px; 
         }
 
-        /* ----- 헤더(네비게이션 바) 스타일 (유지) ----- */
+        /* ----- (이하 모든 CSS는 원본과 동일) ----- */
         .navbar {
             background-color: #1c1c1c !important; 
             border-bottom: 1px solid #333 !important;
-            /* (중요) 화면 상단에 고정 */
             position: fixed; 
             top: 0;
             width: 100%;
@@ -34,7 +38,6 @@
         .nav-link { color: #aaa !important; font-weight: 500; }
         .nav-link:hover, .nav-link.active { color: #fff !important; }
         
-        /* ----- 폼/버튼 스타일 (유지) ----- */
         .form-control, .form-select {
             border-radius: 8px; border: 1px solid #444;
             background-color: #2a2a2a; color: #fff; padding: 12px 15px;
@@ -53,7 +56,6 @@
             background-color: #76ff03; border-color: #76ff03; color: #121212;
         }
         
-        /* ----- (신규) 2열 레이아웃 CSS ----- */
         .left-sidebar {
             width: 240px;
             height: calc(100vh - 56px); /* 100% 높이 - 헤더 높이 */
@@ -71,7 +73,6 @@
             width: calc(100% - 240px); /* 나머지 너비 채우기 */
         }
         
-        /* ----- (신규) 왼쪽 메뉴 네비게이션 스타일 ----- */
         .left-sidebar .nav-pills .nav-link {
             color: #aaa; font-weight: 500;
             padding: 0.75rem 1rem; border-radius: 8px;
@@ -92,7 +93,6 @@
             padding-top: 0; /* 첫번째 소제목은 위쪽 패딩 제거 */
         }
 
-        /* ----- (신규) lol.ps 게시판 컨트롤바 스타일 ----- */
         .board-controls {
             display: flex;
             justify-content: space-between;
@@ -124,7 +124,6 @@
         .search-form .form-select { width: 120px; }
         .search-form .form-control { width: 250px; }
 
-        /* ----- (수정) lol.ps 게시판 테이블 스타일 ----- */
         .table {
             border: 1px solid #333;
             border-radius: 8px;
@@ -167,7 +166,6 @@
             color: #54c700;
         }
         
-        /* 페이지네이션 스타일 */
         .pagination .page-item {
             margin: 0 2px;
         }
@@ -193,7 +191,6 @@
             border-color: #333;
             color: #555;
         }
-		/* 1. 메타 정보: 한 줄 정렬 스타일 */
 		        .post-detail-meta {
 		            display: flex;         
 		            align-items: center;   
@@ -223,7 +220,6 @@
 		            gap: 4px;              
 		        }
 
-		        /* 2. 추천 버튼 스타일 */
 		        .post-vote-section {
 		            padding-top: 20px;
 		            border-top: 1px solid #333; 
@@ -259,8 +255,6 @@
 		            margin-right: 8px;
 		        }
 
-		        /* 3. 댓글 폼 스타일 */
-		        /* .card 스타일을 오버라이드하여 입력 영역 배경색 조정 */
 		        .comment-input-area {
 		            background-color: #262626; 
 		            padding: 15px 20px;
@@ -270,7 +264,6 @@
 		            border: 1px solid #444;
 		        }
 		        
-		        /* 댓글 폼 레이아웃 */
 		        .comment-form {
 		            display: flex;
 		            flex-direction: column; 
@@ -287,7 +280,6 @@
 		        }
 
 		        .comment-input {
-		            /* 기존 .form-control 스타일을 오버라이드 */
 		            flex-grow: 1; 
 		            border: none;
 		            background-color: transparent; 
@@ -332,32 +324,34 @@
 
 		    </style>
         
-    </style>
+		</style>
 
-    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">IQ 300</title>
+		    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">IQ 300</title>
 
-    <script th:inline="javascript">
-        window.addEventListener('pageshow', function(event) {
-            // event.persisted가 true이면 '뒤로가기'로 캐시에서 로드된 페이지임
-            if (event.persisted) {
-                window.location.reload();
-            }
-        });
-    </script>
-    
-</head>
-<body>
+		    <script th:inline="javascript">
+		        window.addEventListener('pageshow', function(event) {
+		            if (event.persisted) {
+		                window.location.reload();
+		            }
+		        });
+			</script>
+			    
+			</head>
+			<body>
 
-<nav th:replace="~{fragments/header :: header}"></nav>
+			<nav th:replace="~{fragments/header :: header}"></nav>
 
-<div layout:fragment="content">
-    </div>
+			<div layout:fragment="content">
+			</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
-        crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+			        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+			        crossorigin="anonymous" defer></script> 
 
-<th:block layout:fragment="script"></th:block>
+			<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/main.min.js' defer></script>
+			<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/locales/ko.js' defer></script>
 
-</body>
-</html>
+			<th:block layout:fragment="script"></th:block>
+
+			</body>
+			</html>

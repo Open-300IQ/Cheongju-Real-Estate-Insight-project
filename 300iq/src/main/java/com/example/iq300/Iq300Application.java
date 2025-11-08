@@ -71,5 +71,20 @@ public class Iq300Application {
 
             System.out.println("====== (완료) DB 데이터 적재 완료 ======");
         };
+
+    }
+    @Bean
+    public CommandLineRunner initCsvData(CsvDataService csvDataService) {
+        return args -> {
+            System.out.println("====== [CsvDataService] 데이터 로드 시작 ======");
+            // csvDataService.loadTransactions(); // (필요하면 주석 해제)
+            // csvDataService.loadAgents();       // (필요하면 주석 해제)
+            // csvDataService.loadPopulation();   // (필요하면 주석 해제)
+            
+            // (중요!) 부동산 용어사전 CSV 로드 실행
+            csvDataService.loadRealEstateTerms(); 
+            
+            System.out.println("====== [CsvDataService] 모든 데이터 로드 완료 ======");
+        };
     }
 }

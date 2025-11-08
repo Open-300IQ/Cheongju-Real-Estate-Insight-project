@@ -29,9 +29,10 @@ public class SecurityConfig {
                         new AntPathRequestMatcher("/analysis"),
                         new AntPathRequestMatcher("/ai"),
                         
-                        // ======== [ 이 2줄을 추가합니다 ] ========
+                        new AntPathRequestMatcher("/calendar"),
                         new AntPathRequestMatcher("/question/list"),
-                        new AntPathRequestMatcher("/question/detail/**")
+                        new AntPathRequestMatcher("/question/detail/**"),
+                        new AntPathRequestMatcher("/dictionary/list")
                         
                 ).permitAll()
                 .anyRequest().authenticated()
