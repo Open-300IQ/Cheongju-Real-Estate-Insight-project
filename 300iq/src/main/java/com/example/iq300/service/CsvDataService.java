@@ -15,7 +15,6 @@ import com.example.iq300.repository.RealEstateAgentRepository;
 import com.example.iq300.repository.TransactionRepository;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
-
 @Service
 public class CsvDataService {
 
@@ -101,10 +100,15 @@ public class CsvDataService {
         System.out.println("[CsvService] 총 " + totalLoaded + "건의 실거래가 데이터 로드 완료.");
         System.out.println("[CsvService] 총 " + allSavedTransactions.size() + "건의 실거래가 데이터 DB 적재 완료.");
         return allSavedTransactions;
+
     }
 
     /**
      * 실거래가 CSV 파일을 파싱합니다.
+<<<<<<< HEAD
+=======
+     * (내부 파싱 로직은 변경되지 않았습니다.)
+>>>>>>> be64e1117af785781039cc35590f5924c89eb713
      */
     private List<RealEstateTransaction> parseTransactionFile(String filePath, String txType, String encoding, int skipLines) {
         List<RealEstateTransaction> list = new ArrayList<>();
@@ -183,6 +187,7 @@ public class CsvDataService {
                     }
                 } catch (Exception e) {
                     // 파싱 중 오류 발생 시 무시
+
                 }
             }
         } catch (Exception e) {
@@ -295,5 +300,6 @@ public class CsvDataService {
     	}
     	return list;
     }
+
 
 }

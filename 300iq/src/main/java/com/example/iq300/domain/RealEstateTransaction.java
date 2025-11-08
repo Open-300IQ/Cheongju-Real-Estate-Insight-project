@@ -24,6 +24,7 @@ public class RealEstateTransaction {
     @Column(length = 30) private String buildingName;    // 단지명 또는 건물명
     private double area;            // 전용면적(㎡)
     @Column(length = 30) private String contractDate;    // 계약년월일 (예: "20251009")
+
     private int price;           // 거래금액(만원) 또는 보증금(만원)
     private int rent;            // 월세(만원) (매매의 경우 0)
 }

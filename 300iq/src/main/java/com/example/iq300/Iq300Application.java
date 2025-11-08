@@ -40,6 +40,7 @@ public class Iq300Application {
             csvDataService.loadAgents();
             csvDataService.loadPopulation();
 
+
             System.out.println("데이터 로드 완료. 사용자 데이터 생성 시작...");
 
             // 2. 관리자(admin) 및 일반 사용자(user1) 생성
