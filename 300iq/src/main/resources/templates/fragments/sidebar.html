@@ -11,7 +11,9 @@
             </li>
             <li class="nav-item"><a class="nav-link" href="#">부동산 용어사전</a></li>
             <li class="nav-item"><a class="nav-link" href="#">청약 가이드</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">청약 일정</a></li>
+			<li class="nav-item">
+			                <a class="nav-link" th:href="@{/calendar}"
+			                   th:classappend="${activeMenu == 'calendar'} ? 'active'">청약 일정</a>
         </ul>
         
         <h6 class="nav-category">커뮤니티</h6>

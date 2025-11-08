@@ -25,10 +25,10 @@ public class RealEstateAgent {
     private Long id;
 
     // 집계 기준
-    @Column(length = 30) private String agentName;        
-    @Column(length = 30) private String officeName;            
-    @Column(length = 30) private String address; 
-    @Column(length = 30) private String identy_num;
+    @Column(length = 100) private String agentName;        
+    @Column(length = 100) private String officeName;            
+    @Column(length = 100) private String address; 
+    @Column(length = 100) private String identy_num;
     
     
 }

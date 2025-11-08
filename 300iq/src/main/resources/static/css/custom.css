@@ -160,3 +160,155 @@ h2, h4 {
 .comment-submit-btn:hover {
     background-color: #3A4CBB;
 }
+/* 1. 년도/월 컨트롤 */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e1e1e;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+.year-selector {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    gap: 15px;
+}
+.year-selector .arrow-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+}
+.year-selector .arrow-btn:hover:not(:disabled) {
+    color: #54c700;
+}
+.year-selector .arrow-btn:disabled {
+    color: #444;
+    cursor: not-allowed;
+}
+.today-btn {
+    background-color: #54c700 !important;
+    border-color: #54c700 !important;
+    color: #121212 !important;
+    font-weight: 700;
+}
+
+/* 2. 필터 버튼 영역 */
+.calendar-filters label {
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.filter-buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.btn-filter {
+    color: #fff;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: none;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+}
+.btn-filter.checked {
+    opacity: 1;
+}
+
+/* 필터 버튼 색상 */
+.btn-filter.type-private-pre { background-color: #008080; } /* 민간사전청약 APT */
+.btn-filter.type-special { background-color: #6a006a; } /* 특별공급 */
+.btn-filter.type-rank1 { background-color: #E6A8FF; color: #121212; } /* 1순위 */
+.btn-filter.type-rank2 { background-color: #00CED1; color: #121212; } /* 2순위 */
+.btn-filter.type-unranked { background-color: #808080; } /* 무순위 */
+.btn-filter.type-office { background-color: #ff9933; } /* 오피스텔 등 */
+.btn-filter.type-public-rental { background-color: #ffcc00; color: #121212; } /* 공공지원민간임대 */
+
+/* 3. 캘린더 테이블 */
+.month-tabs .nav-link {
+    color: #aaa;
+    font-weight: 700;
+    border-color: #333;
+    background-color: #2a2a2a;
+    margin-right: 4px;
+}
+.month-tabs .nav-link.active {
+    color: #121212;
+    background-color: #54c700;
+    border-color: #54c700;
+}
+.month-tabs .nav-link:hover {
+    border-color: #444;
+}
+
+.calendar-table {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: fixed; /* 셀 너비 고정 */
+}
+.calendar-table thead th {
+    font-weight: 700;
+    color: #aaa;
+    border-color: #333;
+    background-color: #2a2a2a;
+    text-align: center;
+    padding: 10px 5px;
+}
+.calendar-table tbody tr {
+    height: 120px; /* 각 주간 행 높이 지정 */
+    border-color: #333;
+}
+.date-cell {
+    vertical-align: top;
+    font-weight: 700;
+    color: #ddd;
+    border-color: #333;
+    padding: 8px;
+    text-align: left;
+}
+.date-cell.sunday { color: #cc5555; } /* 일요일 */
+.date-cell.saturday { color: #55aacc; } /* 토요일 */
+
+/* 캘린더 일정 박스 (<a> 태그) */
+.schedule-item {
+    display: block;
+    font-size: 0.8rem;
+    padding: 4px 6px;
+    margin-top: 4px;
+    border-radius: 3px;
+    font-weight: 500;
+    text-align: center;
+    color: #fff; /* 기본 글자색 흰색 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+.schedule-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    text-decoration: none;
+    color: #fff;
+}
+
+/* 캘린더 일정 항목: 유형별 색상 매핑 */
+.schedule-item.type-private-pre { background-color: #008080; }
+.schedule-item.type-special { background-color: #6a006a; }
+.schedule-item.type-rank1 { background-color: #E6A8FF; color: #121212; }
+.schedule-item.type-rank2 { background-color: #00CED1; color: #121212; }
+.schedule-item.type-unranked { background-color: #808080; }
+.schedule-item.type-office { background-color: #ff9933; }
+.schedule-item.type-public-rental { background-color: #ffcc00; color: #121212; }
