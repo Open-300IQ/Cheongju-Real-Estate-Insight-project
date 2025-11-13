@@ -68,9 +68,8 @@ public class MainController {
     /**
      * AI 상담받기 페이지
      */
-    @GetMapping("/ai")
-    public String aiPage() {
-        return "ai"; // templates/ai.html
-    }
-   
+//    @GetMapping("/ai")
+//    public String aiPage() {
+//        return "ai"; // templates/ai.html
+//    }  GeminiController로 매핑 이동   
 }
