@@ -14,7 +14,7 @@ import com.example.iq300.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
-// import java.util.Optional; // (사용 안 함)
+
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -69,6 +69,7 @@ public class Iq300Application {
     public CommandLineRunner initCsvData(CsvDataService csvDataService) {
         return args -> {
             System.out.println("====== [CsvDataService] 데이터 로드 시작 ======");
+
             csvDataService.loadTransactions();
             monthlyAvgPriceService.aggregateAndSaveData(); 
             csvDataService.loadAgents();
@@ -79,6 +80,7 @@ public class Iq300Application {
             
             
             // (중요!) 부동산 용어사전 CSV 로드 실행
+
             csvDataService.loadRealEstateTerms(); 
 
             
