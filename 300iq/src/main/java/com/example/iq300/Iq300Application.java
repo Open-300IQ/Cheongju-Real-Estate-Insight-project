@@ -75,8 +75,7 @@ public class Iq300Application {
             csvDataService.loadAgents();
             csvDataService.loadPopulation();
             csvDataService.loadTotal();
-            csvDataService.calculateAndSaveMonthlyVolumes();
-            csvDataService.calculateAndSaveALLGrowthRates();
+            csvDataService.buildAndSaveFinalData();
             
             
             // (중요!) 부동산 용어사전 CSV 로드 실행

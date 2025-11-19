@@ -11,11 +11,11 @@ import java.util.List;
 @Repository
 public interface TotalDataRepository extends JpaRepository<TotalData, Long> {
 	
-	@Query("SELECT t FROM TotalData t WHERE " + "(:address IS NULL OR t.address LIKE %:address%) AND "
-			+ "(:txType IS NULL OR t.transactionType LIKE %:txType%) " + "ORDER BY t.contractDate DESC")
+	@Query("SELECT t FROM TotalData t WHERE (:address IS NULL OR t.address LIKE %:address%) AND (:txType IS NULL OR t.transactionType LIKE %:txType%) AND (:buildingName IS NULL OR t.buildingName LIKE %:buildingName%) ORDER BY t.contractDate DESC")
 	
 	List<TotalData> findByDynamicQuery (
 			@Param("address") String addressKeyword,
 			@Param("txType") String transactionKeyword,
+			@Param("buildingName") String BuildingKeyword,
 			Pageable pageable);
 }
