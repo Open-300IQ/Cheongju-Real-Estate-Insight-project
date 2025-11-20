@@ -30,10 +30,11 @@
     </h6>
     
     <div class="collapse" id="collapseInfo"
-         th:classappend="${#lists.contains({'realty', 'calendar', 'dictionary'}, activeMenu)} ? 'show' : ''">
+         th:classappend="${#lists.contains({'map', 'calendar', 'dictionary'}, activeMenu)} ? 'show' : ''">
         <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#">(준비중) 실제 매물 보기</a>
+                <a class="nav-link" th:href="@{/map}"
+                   th:classappend="${activeMenu == 'map'} ? 'active'"> 실제 매물 보기</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/calendar}"
