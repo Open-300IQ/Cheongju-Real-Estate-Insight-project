@@ -19,7 +19,7 @@
 ### 1. 부동산 데이터 시각화 (Data Visualization)
 - **지도 기반 검색:** 청주시 각 구별(상당/서원/청원/흥덕) 매물 위치 및 가격 정보 확인 (`MapController`)
 - **시세 분석:** 아파트, 오피스텔, 단독다가구 등 주거 유형별 월별 평균 가격 추이 그래프 제공
-- **실거래가 조회:** 2025년 최신 CSV 데이터를 기반으로 한 정확한 실거래가 정보
+- **실거래가 조회:** 2023년부터 2025년 까지의 CSV 데이터를 기반으로 한 정확한 실거래가 정보
 
 ### 2. AI 부동산 어드바이저 (AI Advisor)
 - **Gemini / GPT 연동:** 사용자의 부동산 관련 질문에 대해 AI가 실시간으로 답변 (`GeminiController`, `GptService`)
@@ -44,9 +44,9 @@
 | **Framework** | Spring Boot 3.x |
 | **Build Tool** | Gradle |
 | **Frontend** | Thymeleaf, HTML/CSS/JS, Bootstrap |
-| **Database** | H2 / MySQL (설정에 맞게 수정) |
+| **Database** | MySQL |
 | **AI Model** | Google Gemini API, OpenAI GPT |
-| **Data** | Public Data Portal (CSV Parsing) |
+| **Data** | Public Data Portal (CSV Parsing),    |
 
 ---
 
