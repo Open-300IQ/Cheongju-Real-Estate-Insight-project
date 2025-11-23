@@ -60,19 +60,7 @@ public class Iq300Application {
                     System.out.println("사용자(user2) 생성 완료.");
                 }
                 
-                if (userService.findUser("lim").isEmpty()) {
-                    userService.create("lim", "user36@test.com", "1234");
-                    System.out.println("사용자(user2) 생성 완료.");
-                }
-                if (userService.findUser("hong").isEmpty()) {
-                    userService.create("hong", "user73@test.com", "1234");
-                    System.out.println("사용자(user2) 생성 완료.");
-                }
-                if (userService.findUser("han").isEmpty()) {
-                    userService.create("han", "user83@test.com", "1234");
-                    System.out.println("사용자(user2) 생성 완료.");
-                }
-//                // 3. Q&A 및 자유게시판 테스트 게시글 생성 (findUser 사용)
+                // 3. Q&A 및 자유게시판 테스트 게시글 생성 (findUser 사용)
 //                if (userService.findUser("admin").isPresent()) {
 //                    User admin = userService.findUser("admin").get();
 //                    questionService.create("Q&A 테스트 제목 1", "Q&A 테스트 내용 1입니다.", admin);
@@ -81,8 +69,6 @@ public class Iq300Application {
 //                    User user1 = userService.findUser("user1").get();
 //                    boardService.createPost("자유게시판 테스트 1", "자유게시판 내용 1입니다.", user1);
 //                }
-                
-                
 
             } catch (Exception e) {
                 System.out.println("사용자 또는 게시글 생성 중 오류: " + e.getMessage());
@@ -107,8 +93,8 @@ public class Iq300Application {
 //            
 //            // (중요!) 부동산 용어사전 CSV 로드 실행
 //
- //           csvDataService.loadRealEstateTerms(); 
- //           csvDataService.loadMapTransactions();
+//            csvDataService.loadRealEstateTerms(); 
+//            csvDataService.loadMapTransactions();
 //            csvDataService.loadHousingPolicies();
             
             System.out.println("====== [CsvDataService] 모든 데이터 로드 완료 ======");
