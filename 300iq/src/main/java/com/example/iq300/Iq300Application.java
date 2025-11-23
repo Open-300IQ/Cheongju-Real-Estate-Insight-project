@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.example.iq300.domain.User;
 import com.example.iq300.service.BoardService; // 1. BoardService 임포트
 import com.example.iq300.service.CsvDataService;
 import com.example.iq300.service.MonthlyAvgPriceService;
@@ -33,18 +32,32 @@ public class Iq300Application {
     @Bean
     public CommandLineRunner initData() {
         return (args) -> {
-            
-
-            // 2. 관리자(admin) 및 일반 사용자(user1) 생성
+        		
             try {
                 if (userService.findUser("admin").isEmpty()) {
                     userService.create("admin", "admin@test.com", "1234");
                     System.out.println("사용자(admin) 생성 완료.");
                 }
                 
-                if (userService.findUser("user1").isEmpty()) {
-                    userService.create("user1", "user1@test.com", "1234");
+                if (userService.findUser("park").isEmpty()) {
+                    userService.create("park", "user11@test.com", "1234");
                     System.out.println("사용자(user1) 생성 완료.");
+                }
+                if (userService.findUser("jun").isEmpty()) {
+                    userService.create("jun", "user22@test.com", "1234");
+                    System.out.println("사용자(user2) 생성 완료.");
+                }
+                if (userService.findUser("hichan").isEmpty()) {
+                    userService.create("hichan", "user32@test.com", "1234");
+                    System.out.println("사용자(user2) 생성 완료.");
+                }
+                if (userService.findUser("junghwan").isEmpty()) {
+                    userService.create("junghwan", "user43@test.com", "1234");
+                    System.out.println("사용자(user2) 생성 완료.");
+                }
+                if (userService.findUser("sungwong").isEmpty()) {
+                    userService.create("sungwong", "user53@test.com", "1234");
+                    System.out.println("사용자(user2) 생성 완료.");
                 }
                 
                 // 3. Q&A 및 자유게시판 테스트 게시글 생성 (findUser 사용)
@@ -83,9 +96,9 @@ public class Iq300Application {
 //            csvDataService.loadRealEstateTerms(); 
 //            csvDataService.loadMapTransactions();
 //            csvDataService.loadHousingPolicies();
-
             
             System.out.println("====== [CsvDataService] 모든 데이터 로드 완료 ======");
         };
     }
+    
 }
