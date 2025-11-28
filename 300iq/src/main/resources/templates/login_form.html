@@ -2,40 +2,162 @@
 <html lang="ko" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}"> <head>
-    <title>로그인</title>
+      layout:decorate="~{layout}">
+<head>
+    <title>로그인 - IQ 300</title>
+    <style>
+        /* [스타일 정의] 블랙 & 네온 그린 테마 */
+        :root {
+            --iq-neon: #00ff88;  /* 형광 연두색 */
+            --iq-black: #000000; /* 완전 검정 */
+            --iq-dark: #111111;  /* 카드 배경 (아주 어두운 회색) */
+            --iq-input: #222222; /* 입력창 배경 */
+        }
+
+        /* 전체 배경 덮어쓰기 */
+        body {
+            background-color: var(--iq-black) !important;
+        }
+
+        /* 화면 중앙 정렬을 위한 컨테이너 */
+        .login-wrapper {
+            min-height: 75vh; /* 화면 높이의 75% 확보 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 로그인 박스 디자인 */
+        .login-card {
+            background-color: var(--iq-dark);
+            width: 100%;
+            max-width: 400px; /* 너무 넓지 않게 제한 */
+            padding: 40px;
+            border-radius: 12px;
+            /* 은은한 네온 그림자 (선택 사항) */
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.05); 
+            border: 1px solid #333;
+        }
+
+        /* 제목 스타일 (LOGIN) */
+        .login-title {
+            color: var(--iq-neon);
+            font-size: 2rem;
+            font-weight: 800; /* 아주 굵게 */
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 2px; /* 자간 넓게 */
+        }
+
+        /* 라벨 스타일 */
+        .custom-label {
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase; /* 영문일 경우 대문자 변환 */
+        }
+
+        /* 입력창 스타일 (아이콘 없이 심플하게) */
+        .custom-input {
+            width: 100%;
+            background-color: var(--iq-input);
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 12px 15px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .custom-input:focus {
+            outline: none;
+            border-color: var(--iq-neon); /* 포커스 시 네온 그린 테두리 */
+            box-shadow: 0 0 0 1px var(--iq-neon);
+            background-color: #000;
+        }
+
+        /* 버튼 스타일 */
+        .btn-neon {
+            width: 100%;
+            background-color: var(--iq-neon);
+            color: #000; /* 글자는 검정색 */
+            font-weight: 800;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-neon:hover {
+            opacity: 0.9; /* 마우스 올리면 살짝 투명하게 */
+        }
+
+        /* 하단 링크 (회원가입 등) */
+        .login-links {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.9rem;
+        }
+        .login-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .login-links a:hover {
+            color: var(--iq-neon); /* 마우스 올리면 네온색 */
+        }
+        .divider {
+            color: #333;
+            margin: 0 10px;
+        }
+        
+        /* 에러 메시지 */
+        .error-msg {
+            color: #ff4d4d;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 
 <body>
-<div layout:fragment="content" class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card p-4" style="border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                <h3 class="text-center mb-4" style="font-weight: 700; color: var(--bs-primary);">로그인</h3>
-                
-                <form th:action="@{/user/login}" method="post">
-                    
-                    <div th:if="${param.error}" class="alert alert-danger" role="alert">
-                        사용자ID 또는 비밀번호를 확인해 주세요.
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="username" class="form-label" style="font-weight: 500;">사용자ID</label>
-                        <input type="text" name="username" id="username" class="form-control">
-                    </div>
-                    <div class="mb-4">
-                        <label for="password" class="form-label" style="font-weight: 500;">비밀번호</label>
-                        <input type="password" name="password" id="password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">로그인</button>
-                    
-                    <div class="text-center mt-3">
-                        <a th:href="@{/user/signup}" class="text-decoration-none">아직 회원이 아니신가요? 회원가입</a>
-                    </div>
-                </form>
+<div layout:fragment="content" class="login-wrapper">
+    
+    <div class="login-card">
+        <h1 class="login-title">LOGIN</h1>
+
+        <form th:action="@{/user/login}" method="post">
+            
+            <div th:if="${param.error}" class="error-msg">
+                아이디 또는 비밀번호가 일치하지 않습니다.
             </div>
-        </div>
+
+            <div class="mb-4">
+                <label for="username" class="custom-label">ID</label>
+                <input type="text" name="username" id="username" class="custom-input" placeholder="아이디를 입력하세요">
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="custom-label">PASSWORD</label>
+                <input type="password" name="password" id="password" class="custom-input" placeholder="비밀번호를 입력하세요">
+            </div>
+
+            <button type="submit" class="btn-neon">로그인</button>
+
+            <div class="login-links">
+                <a th:href="@{/user/signup}">회원가입</a>
+                <span class="divider">|</span>
+                <a th:href="@{/}">메인으로</a>
+            </div>
+        </form>
     </div>
+
 </div>
 </body>
 </html>

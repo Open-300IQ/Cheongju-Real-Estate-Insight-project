@@ -13,23 +13,27 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-	
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.css">
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}">
+
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/locales/ko.global.min.js"></script>
-	    
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/locales/ko.global.min.js"></script>
+        
     <style>
-		
-        /* ======== [ 2. (수정) body 폰트 변경 ] ======== */
+        /* ======== [ 폰트 및 기본 스타일 ] ======== */
         body {
-            /* (Pretendard와 기본 시스템 폰트를 순서대로 적용) */
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important; 
             background-color: #121212;
             padding-top: 56px; 
+            display: flex; /* 푸터 하단 고정을 위한 설정 */
+            flex-direction: column;
+            min-height: 100vh;
         }
-        /* ----- (이하 모든 CSS는 원본과 동일) ----- */
+
+        /* ----- 네비게이션 ----- */
         .navbar {
             background-color: #1c1c1c !important; 
             border-bottom: 1px solid #333 !important;
@@ -42,6 +46,7 @@
         .nav-link { color: #aaa !important; font-weight: 500; }
         .nav-link:hover, .nav-link.active { color: #fff !important; }
         
+        /* ----- 폼 요소 ----- */
         .form-control, .form-select {
             border-radius: 8px; border: 1px solid #444;
             background-color: #2a2a2a; color: #fff; padding: 12px 15px;
@@ -50,6 +55,8 @@
             background-color: #2a2a2a; border-color: #54c700;
             box-shadow: 0 0 0 4px rgba(84, 199, 0, 0.2); color: #fff;
         }
+        
+        /* ----- 공통 요소 ----- */
         .card { background-color: #1e1e1e; border: 1px solid #333; }
         .btn { border-radius: 8px; font-weight: 600; padding: 0.5rem 1rem; }
         .btn-primary {
@@ -60,23 +67,26 @@
             background-color: #76ff03; border-color: #76ff03; color: #121212;
         }
         
+        /* ----- 레이아웃 ----- */
         .left-sidebar {
             width: 240px;
-            height: calc(100vh - 56px); /* 100% 높이 - 헤더 높이 */
-            position: fixed; /* 화면에 고정 */
-            top: 56px; /* 헤더 바로 아래 */
+            height: calc(100vh - 56px);
+            position: fixed;
+            top: 56px;
             left: 0;
-            background: #1e1e1e; /* lol.ps 왼쪽 메뉴 배경색 */
+            background: #1e1e1e;
             border-right: 1px solid #333;
             padding: 1.5rem 1rem;
             overflow-y: auto; 
         }
         .right-content {
-            margin-left: 240px; /* 왼쪽 사이드바 너비만큼 밀어내기 */
+            margin-left: 240px;
             padding: 2rem;
-            width: calc(100% - 240px); /* 나머지 너비 채우기 */
+            width: calc(100% - 240px);
+            flex: 1; /* 본문 영역이 남은 공간을 차지하도록 */
         }
         
+        /* ----- 사이드바 메뉴 ----- */
         .left-sidebar .nav-pills .nav-link {
             color: #aaa; font-weight: 500;
             padding: 0.75rem 1rem; border-radius: 8px;
@@ -88,273 +98,160 @@
         .left-sidebar .nav-pills .nav-link.active {
             background-color: #54c700; color: #121212; font-weight: 700;
         }
-        .left-sidebar .nav-category { /* "커뮤니티" 같은 소제목 */
+        .left-sidebar .nav-category {
             font-size: 0.9rem; font-weight: 700;
             color: #777; text-transform: uppercase;
             padding: 1.5rem 0rem 0.5rem 0.5rem;
         }
-        .left-sidebar .nav-category:first-of-type {
-            padding-top: 0; /* 첫번째 소제목은 위쪽 패딩 제거 */
-        }
+        .left-sidebar .nav-category:first-of-type { padding-top: 0; }
 
+        /* ----- 게시판 컨트롤 ----- */
         .board-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem; background-color: #1e1e1e;
+            border: 1px solid #333; border-radius: 8px; margin-bottom: 1.5rem;
         }
         .sort-tabs .nav-link {
-            color: #aaa;
-            font-weight: 700;
-            border: none;
-            border-bottom: 2px solid transparent;
-            border-radius: 0;
-            padding: 0.25rem 0.5rem;
-            margin-right: 1rem;
+            color: #aaa; font-weight: 700; border: none;
+            border-bottom: 2px solid transparent; border-radius: 0;
+            padding: 0.25rem 0.5rem; margin-right: 1rem;
         }
         .sort-tabs .nav-link.active {
-            color: #fff;
-            background-color: transparent;
-            border-bottom-color: #54c700;
+            color: #fff; background-color: transparent; border-bottom-color: #54c700;
         }
-        .search-form {
-            display: flex;
-            gap: 0.5rem;
-        }
+        .search-form { display: flex; gap: 0.5rem; }
         .search-form .form-select { width: 120px; }
         .search-form .form-control { width: 250px; }
 
+        /* ----- 테이블 ----- */
         .table {
-            border: 1px solid #333;
-            border-radius: 8px;
-            background-color: #1e1e1e;
-            overflow: hidden; /* 모서리 둥글게 */
+            border: 1px solid #333; border-radius: 8px;
+            background-color: #1e1e1e; overflow: hidden;
         }
         .table > :not(caption) > * > * {
-            background-color: transparent;
-            border-bottom-width: 1px;
-            border-color: #333;
-            padding: 1rem 0.75rem; 
-            vertical-align: middle; 
+            background-color: transparent; border-bottom-width: 1px;
+            border-color: #333; padding: 1rem 0.75rem; vertical-align: middle;
         }
         .table thead th {
-            font-weight: 500;
-            color: #aaa;
-            border-bottom-width: 1px; /* 얇은 선으로 통일 */
-            border-color: #444;
-            text-align: center;
+            font-weight: 500; color: #aaa; border-bottom-width: 1px;
+            border-color: #444; text-align: center;
         }
-        .table tbody tr {
-            transition: background-color 0.2s;
-        }
-        .table tbody tr:hover {
-            background-color: #2a2a2a; 
-        }
-        .table tbody td {
-            text-align: center;
-            color: #ddd;
-        }
-        .table tbody td:nth-child(2) { /* 제목만 왼쪽 정렬 */
-            text-align: left;
-        }
-        .table tbody td a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .table tbody td a:hover {
-            color: #54c700;
-        }
+        .table tbody tr { transition: background-color 0.2s; }
+        .table tbody tr:hover { background-color: #2a2a2a; }
+        .table tbody td { text-align: center; color: #ddd; }
+        .table tbody td:nth-child(2) { text-align: left; }
+        .table tbody td a { color: #fff; text-decoration: none; font-weight: 500; }
+        .table tbody td a:hover { color: #54c700; }
         
-        .pagination .page-item {
-            margin: 0 2px;
-        }
+        /* ----- 페이지네이션 ----- */
+        .pagination .page-item { margin: 0 2px; }
         .pagination .page-link {
-            background-color: #2a2a2a;
-            border: 1px solid #444;
-            color: #aaa;
-            border-radius: 8px;
+            background-color: #2a2a2a; border: 1px solid #444; color: #aaa; border-radius: 8px;
         }
         .pagination .page-link:hover {
-            background-color: #333;
-            border-color: #555;
-            color: #fff;
+            background-color: #333; border-color: #555; color: #fff;
         }
         .pagination .page-item.active .page-link {
-            background-color: #54c700;
-            border-color: #54c700;
-            color: #121212;
-            font-weight: 700;
+            background-color: #54c700; border-color: #54c700; color: #121212; font-weight: 700;
         }
         .pagination .page-item.disabled .page-link {
-            background-color: #1e1e1e;
-            border-color: #333;
-            color: #555;
+            background-color: #1e1e1e; border-color: #333; color: #555;
         }
-		        .post-detail-meta {
-		            display: flex;         
-		            align-items: center;   
-		            flex-wrap: wrap;       
-		            gap: 16px;             
-		            
-		            color: #aaa;          
-		            font-size: 0.9rem;
-		            margin-top: 8px;       
-		            margin-bottom: 24px;   
-		            border-bottom: 1px solid #333; 
-		            padding-bottom: 16px; 
-		        }
 
-		        .post-detail-meta .author {
-		            font-weight: bold;
-		            color: #eee;
-		            background-color: #4A60D0; /* 작성자 강조 배경색 */
-		            padding: 4px 10px;
-		            border-radius: 4px;
-		            font-size: 0.85rem;
-		        }
+        /* ----- 상세 페이지 메타 ----- */
+        .post-detail-meta {
+            display: flex; align-items: center; flex-wrap: wrap; gap: 16px;
+            color: #aaa; font-size: 0.9rem; margin-top: 8px;
+            margin-bottom: 24px; border-bottom: 1px solid #333; padding-bottom: 16px;
+        }
+        .post-detail-meta .author {
+            font-weight: bold; color: #eee;
+            background-color: #4A60D0; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem;
+        }
+        .post-detail-meta .stat-item { display: inline-flex; align-items: center; gap: 4px; }
 
-		        .post-detail-meta .stat-item {
-		            display: inline-flex;  
-		            align-items: center;   
-		            gap: 4px;              
-		        }
+        /* ----- 투표 버튼 ----- */
+        .post-vote-section {
+            padding-top: 20px; border-top: 1px solid #333;
+            padding-bottom: 20px; border-bottom: 1px solid #333;
+            display: flex; justify-content: center;
+        }
+        .vote-btn {
+            display: inline-flex; align-items: center; padding: 10px 20px;
+            border-radius: 6px; font-size: 1rem; font-weight: bold;
+            text-decoration: none; cursor: pointer;
+            background-color: #4A60D0; color: #fff; border: none;
+            transition: background-color 0.2s;
+        }
+        .vote-btn:hover { background-color: #3A4CBB; }
+        .vote-btn i { margin-right: 8px; }
 
-		        .post-vote-section {
-		            padding-top: 20px;
-		            border-top: 1px solid #333; 
-		            padding-bottom: 20px;
-		            border-bottom: 1px solid #333; 
-		            display: flex; 
-		            justify-content: center; 
-		        }
+        /* ----- 댓글 ----- */
+        .comment-input-area {
+            background-color: #262626; padding: 15px 20px;
+            border-radius: 8px; margin-top: 30px; margin-bottom: 30px; border: 1px solid #444;
+        }
+        .comment-form { display: flex; flex-direction: column; gap: 10px; }
+        .comment-input-group {
+            display: flex; align-items: center; width: 100%;
+            background-color: #333; border-radius: 6px; padding-right: 8px;
+        }
+        .comment-input {
+            flex-grow: 1; border: none; background-color: transparent;
+            color: #fff; padding: 12px 15px; font-size: 0.95rem;
+        }
+        .comment-input::placeholder { color: #aaa; }
+        .comment-input:focus { outline: none; box-shadow: none; border: none; }
+        .comment-count {
+            color: #eee; font-size: 1.2rem; margin-top: 40px; margin-bottom: 20px;
+        }
+        .comment-submit-btn {
+            background-color: #4A60D0; color: #fff; border: none;
+            padding: 8px 15px; border-radius: 4px; cursor: pointer;
+            font-size: 0.9rem; font-weight: bold; transition: background-color 0.2s;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .comment-submit-btn:hover { background-color: #3A4CBB; }
 
-		        .vote-buttons {
-		            display: flex;
-		        }
+    </style>
+    
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">IQ 300</title>
 
-		        .vote-btn {
-		            display: inline-flex;
-		            align-items: center;
-		            padding: 10px 20px;
-		            border-radius: 6px;
-		            font-size: 1rem;
-		            font-weight: bold;
-		            text-decoration: none;
-		            cursor: pointer;
-		            background-color: #4A60D0; 
-		            color: #fff;
-		            border: none;
-		            transition: background-color 0.2s;
-		        }
-		        .vote-btn:hover {
-		            background-color: #3A4CBB;
-		        }
+    <script th:inline="javascript">
+        // 페이지 로드 시 폼 초기화 (뒤로가기 문제 해결)
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+                window.location.reload();
+            }
+            setTimeout(function() {
+                var forms = document.querySelectorAll('form');
+                forms.forEach(function(form) {
+                    form.reset();
+                });
+            }, 10);
+        });
+    </script>
+</head>
+<body>
+    
+    <nav th:replace="~{fragments/header :: header}"></nav>
 
-		        .vote-btn i {
-		            margin-right: 8px;
-		        }
+    <div layout:fragment="content"></div>
 
-		        .comment-input-area {
-		            background-color: #262626; 
-		            padding: 15px 20px;
-		            border-radius: 8px;
-		            margin-top: 30px;
-		            margin-bottom: 30px;
-		            border: 1px solid #444;
-		        }
-		        
-		        .comment-form {
-		            display: flex;
-		            flex-direction: column; 
-		            gap: 10px;
-		        }
+    <nav th:replace="~{fragments/ai_popup :: aiPopup}"></nav>
+    
+    <footer class="mt-auto py-4 text-center">
+        <div class="container">
+            <span style="font-size: 0.9rem; color: #6c757d;">
+                IQ 300 &nbsp;|&nbsp; 부동산 데이터 분석 및 커뮤니티
+            </span>
+        </div>
+    </footer>
 
-		        .comment-input-group {
-		            display: flex;
-		            align-items: center;
-		            width: 100%;
-		            background-color: #333; 
-		            border-radius: 6px;
-		            padding-right: 8px; 
-		        }
-
-		        .comment-input {
-		            flex-grow: 1; 
-		            border: none;
-		            background-color: transparent; 
-		            color: #fff;
-		            padding: 12px 15px;
-		            font-size: 0.95rem;
-		        }
-		        .comment-input::placeholder { 
-		            color: #aaa;
-		        }
-		        .comment-input:focus {
-		            outline: none; 
-		            box-shadow: none;
-		            border: none; /* 부트스트랩 포커스 효과 제거 */
-		        }
-		        
-		        .comment-count {
-		            color: #eee;
-		            font-size: 1.2rem;
-		            margin-top: 40px;
-		            margin-bottom: 20px;
-		        }
-
-		        .comment-submit-btn {
-		            background-color: #4A60D0; 
-		            color: #fff;
-		            border: none;
-		            padding: 8px 15px;
-		            border-radius: 4px;
-		            cursor: pointer;
-		            font-size: 0.9rem;
-		            font-weight: bold;
-		            transition: background-color 0.2s;
-		            display: inline-flex;
-		            align-items: center;
-		            gap: 5px;
-		        }
-		        .comment-submit-btn:hover {
-		            background-color: #3A4CBB;
-		        }
-		        /* ==================================== */
-
-		    </style>
-        
-		    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">IQ 300</title>
-
-		    <script th:inline="javascript">
-		        window.addEventListener('pageshow', function(event) {
-		            if (event.persisted) {
-		                window.location.reload();
-		            }
-		        });
-			</script>
-			    
-			</head>
-			<body>
-				
-			<nav th:replace="~{fragments/header :: header}"></nav>
-
-			<div layout:fragment="content">
-			</div>
-
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-			        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
-			        crossorigin="anonymous" defer></script> 
-
-			<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/main.min.js' defer></script>
-			<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/locales/ko.js' defer></script>
-			
-			<th:block layout:fragment="script"></th:block>
-			<nav th:replace="~{fragments/ai_popup :: aiPopup}"></nav>
-		
-		</body>
-			</html>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+            crossorigin="anonymous"></script>
+    
+    <th:block layout:fragment="script"></th:block>
+</body>
+</html>
