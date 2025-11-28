@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head>
+    <title>공지사항 - 상세</title>
+</head>
+<body>
+<div layout:fragment="content">
+    
+    <div th:replace="~{fragments/sidebar :: sidebar(activeMenu='notice')}"></div>
+
+    <div class="right-content">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+            <h3 style="font-weight: 700;">📢 공지사항</h3>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            
+            <div class="card-header bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="card-title mb-0" style="font-weight: bold; color: #333;" 
+                        th:text="${notice.title}"></h4>
+                </div>
+                <div class="mt-2 d-flex justify-content-between text-muted small">
+                    <div>
+                        <span class="me-2"><i class="bi bi-person-fill"></i> 관리자</span>
+                        <span><i class="bi bi-calendar-event"></i> <span th:text="${#temporals.format(notice.createDate, 'yyyy-MM-dd HH:mm')}"></span></span>
+                    </div>
+                    <div>
+                        <span><i class="bi bi-eye"></i> <span th:text="${notice.viewCount}"></span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" style="min-height: 300px;">
+                <p class="card-text" style="white-space: pre-line; line-height: 1.8;" 
+                   th:text="${notice.content}"></p>
+            </div>
+            
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a th:href="@{/notice/list}" class="btn btn-secondary">
+                <i class="bi bi-list"></i> 목록으로
+            </a>
+
+         
+       
+        </div>
+
+    </div>
+</div>
+
+<script layout:fragment="script" type='text/javascript'>
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

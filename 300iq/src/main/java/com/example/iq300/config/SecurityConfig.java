@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 @Configuration
 @EnableWebSecurity
@@ -25,25 +26,32 @@ public class SecurityConfig {
                         new AntPathRequestMatcher("/"),
                         new AntPathRequestMatcher("/user/login"),
                         new AntPathRequestMatcher("/user/signup"),
-                        new AntPathRequestMatcher("/board/detail/**"),
+                        new AntPathRequestMatcher("/board/detail/"),
                         new AntPathRequestMatcher("/analysis"),
                         new AntPathRequestMatcher("/analysis/getDetailTransactions"), 
                         new AntPathRequestMatcher("/ai"),
                         new AntPathRequestMatcher("/ai/chat"),
+                        new AntPathRequestMatcher("/ai/recommend"),
                         new AntPathRequestMatcher("/calendar"),
                         new AntPathRequestMatcher("/question/list"),
-                        new AntPathRequestMatcher("/question/detail/**"),
+                        new AntPathRequestMatcher("/question/detail/"),
                         new AntPathRequestMatcher("/dictionary/list"),
-                        new AntPathRequestMatcher("/pdf/**"),
+                        new AntPathRequestMatcher("/pdf/"),
                         new AntPathRequestMatcher("/guide"), // /guide (안전거래)
-                        new AntPathRequestMatcher("/guide/subscription") // /guide/subscription (주택청약)
-                        
+                        new AntPathRequestMatcher("/guide/subscription"), // /guide/subscription (주택청약)
+                        new AntPathRequestMatcher("/css/**"),
+                        new AntPathRequestMatcher("/js/"),
+                        new AntPathRequestMatcher("/images/")
                 ).permitAll()
                 .anyRequest().authenticated()
             )
             .csrf((csrf) -> csrf
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/**")))
-                
+            .headers((headers) -> headers
+                    .cacheControl(cache -> cache
+                        .disable() // 브라우저가 페이지를 캐싱하지 못하게 설정 (no-cache, no-store 등 자동 적용)
+                    )
+                )
             .formLogin((formLogin) -> formLogin
                 .loginPage("/user/login")       
                 .defaultSuccessUrl("/"))      
